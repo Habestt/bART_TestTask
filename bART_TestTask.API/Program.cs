@@ -1,3 +1,6 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using bART_TestTask.BLL.Configurations.Autofac;
 using bART_TestTask.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +14,12 @@ builder.Services.AddDbContext<TestTaskContext>(options => options
 
 
 // Add services to the container.
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+    builder.RegisterModule(new Container());
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
