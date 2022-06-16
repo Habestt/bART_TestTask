@@ -1,4 +1,14 @@
+using bART_TestTask.DAL.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+string connectionString = builder.Configuration.GetConnectionString("LocalConnection");
+
+builder.Services.AddDbContext<TestTaskContext>(options => options
+    .UseSqlServer(connectionString, b => b.MigrationsAssembly("bART_TestTask.DAL"))
+    .EnableSensitiveDataLogging(), ServiceLifetime.Transient);
+
 
 // Add services to the container.
 
