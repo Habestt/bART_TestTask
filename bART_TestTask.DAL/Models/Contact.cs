@@ -18,6 +18,6 @@ namespace bART_TestTask.DAL.Models
         public string Email { get; set; }
 
         [ForeignKey("Account")]
-        public int AccountId { get; set; }
+        public int? AccountId { get; set; }
     }
 }

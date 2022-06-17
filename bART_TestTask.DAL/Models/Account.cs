@@ -16,7 +16,7 @@ namespace bART_TestTask.DAL.Models
         public string Name { get; set; }
 
         [ForeignKey("Incident")]
-        public string IncidentName { get; set; }
+        public string? IncidentName { get; set; }
 
         [Required]
         public virtual ICollection<Contact> Contacts { get; set; }

@@ -15,8 +15,7 @@ namespace bART_TestTask.DAL.Repositories
         public IncidentRepository(TestTaskContext context) : base(context)
         {
             _context = context;
-        }
-    
+        }    
 
         public override async Task<IEnumerable<Incident>> GetAllAsync()
         {

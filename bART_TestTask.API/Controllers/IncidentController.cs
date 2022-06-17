@@ -2,6 +2,7 @@
 using bART_TestTask.BLL.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace bART_TestTask.API.Controllers
 {
@@ -19,19 +20,50 @@ namespace bART_TestTask.API.Controllers
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _incidentService.GetAllAsync());
+            var incedents = await _incidentService.GetAllAsync();
+            if (incedents == null)
+            {
+                return NotFound();
+            }
+            return Ok(incedents);
         }
 
         [HttpPost("create")]
-        public async Task Create([FromBody] IncidentDTO entity)
+        public async Task<IActionResult> Create([FromBody] IncidentDTO entity)
         {
-            await _incidentService.AddAsync(entity);
+            try
+            {
+                await _incidentService.AddAsync(entity);
+            }
+            catch
+            { 
+                return StatusCode(500);
+            }
+            return Ok(new { Message = "Incident was added successfully" });
+
         }
 
-        [HttpPost("createForAccount")]
-        public async Task CreateForAcc([FromBody] IncidentForAccDTO entity)
+        [HttpPost("createForAccount/{accountName}")]
+        public async Task<IActionResult> CreateForAcc([FromBody] IncidentForAccDTO entity, string accountName)
         {
-            await _incidentService.AddForAccAsync(entity);
+            try
+            {
+                await _incidentService.AddForAccAsync(entity, accountName);
+            }
+            catch(ArgumentException ex)
+            {
+
+                if (ex.Message == "account was not found")
+                {
+                    return NotFound(ex.Message);
+                }
+                else
+                {
+                    return BadRequest(ex.Message);
+                }
+                    
+            }
+            return Ok(new { Message = "Incident was added successfully" });
         }
     }
 }

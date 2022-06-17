@@ -6,7 +6,7 @@ namespace bART_TestTask.BLL.Interfaces
     public interface IIncidentService
     {
         Task AddAsync(IncidentDTO entity);
-        Task AddForAccAsync(IncidentForAccDTO entity);
+        Task AddForAccAsync(IncidentForAccDTO entity, string accountName);
         Task<IEnumerable<Incident>> GetAllAsync();
         Task<Incident> GetByIdAsync(int id);
         Task RemoveAsync(int id);

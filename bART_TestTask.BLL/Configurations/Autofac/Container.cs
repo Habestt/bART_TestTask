@@ -20,7 +20,9 @@ namespace bART_TestTask.BLL.Configurations.Autofac
             builder.RegisterType<IncidentRepository>().As<IRepository<Incident>>().SingleInstance();
             builder.RegisterType<AccountRepository>().As<IRepository<Account>>().SingleInstance();
             builder.RegisterType<ContactRepository>().As<IRepository<Contact>>().SingleInstance();
-            builder.RegisterType<IncidentService>().As<IIncidentService>().SingleInstance();            
+            builder.RegisterType<IncidentService>().As<IIncidentService>().SingleInstance();
+            builder.RegisterType<AccountService>().As<IAccountService>().SingleInstance();
+            builder.RegisterType<ContactService>().As<IContactService>().SingleInstance();
         }
     }
 }

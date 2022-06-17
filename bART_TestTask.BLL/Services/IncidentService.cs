@@ -26,9 +26,9 @@ namespace bART_TestTask.BLL.Services
         }
 
         public async Task AddAsync(IncidentDTO entity)
-        {            
+        {
             Incident incident = AutoMapper<IncidentDTO, Incident>.Map(entity);
-            Account account = AutoMapper<AccountDTO, Account>.Map(entity.Account);            
+            Account account = AutoMapper<AccountDTO, Account>.Map(entity.Account);
             Contact contact = AutoMapper<ContactDTO, Contact>.Map(entity.Account.Contact);
 
             if (entity != null && entity.Account != null && entity.Account.Contact != null)
@@ -47,9 +47,10 @@ namespace bART_TestTask.BLL.Services
             }
         }
 
-        public async Task AddForAccAsync(IncidentForAccDTO entity)
-        {
-            Account user = await _accountRepository.GetByIdAsync(entity.AccountId);
+        public async Task AddForAccAsync(IncidentForAccDTO entity, string accountName)
+        {            
+            var users = await _accountRepository.GetAllAsync();
+            var user = users.Where(x => x.Name == accountName).FirstOrDefault();
 
             if (user != null && user.IncidentName == null)
             {
@@ -58,13 +59,13 @@ namespace bART_TestTask.BLL.Services
                 user.IncidentName = incident.Name;
                 await _accountRepository.UpdateAsync(user);
             }
+            else if (user == null)
+            {
+                throw new ArgumentException("account was not found");
+            }
             else if (user.IncidentName != null)
             {
-                throw new ArgumentException("user alredy have an incident");
-            }
-            else
-            {
-                throw new ArgumentException("user can not be found");
+                throw new ArgumentException("user alredy have an incident");                
             }
         }
 
