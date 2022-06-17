@@ -14,7 +14,8 @@ namespace bART_TestTask.DAL.Interfaces
         Task<IEnumerable<TEntity>> GetAllAsync();
 
         Task AddAsync(TEntity entity);
-        
+        Task AddRangeAsync(IEnumerable<TEntity> entities);
+
         Task RemoveAsync(TEntity entity);
         
         Task UpdateAsync(TEntity entity);

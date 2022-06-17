@@ -1,5 +1,6 @@
 ﻿using bART_TestTask.DAL.Context;
 using bART_TestTask.DAL.Interfaces;
+using bART_TestTask.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,14 @@ namespace bART_TestTask.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
+            await _context.Set<TEntity>().AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        {            
             return await _context.Set<TEntity>().ToListAsync();
         }
 

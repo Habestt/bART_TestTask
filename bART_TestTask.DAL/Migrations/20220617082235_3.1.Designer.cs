@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bART_TestTask.DAL.Context;
 
@@ -10,9 +11,10 @@ using bART_TestTask.DAL.Context;
 namespace bART_TestTask.DAL.Migrations
 {
     [DbContext(typeof(TestTaskContext))]
-    partial class TestTaskContextModelSnapshot : ModelSnapshot
+    [Migration("20220617082235_3.1")]
+    partial class _31
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -14,6 +14,6 @@ namespace bART_TestTask.BLL.Configurations.AutoMapper
             var config = new MapperConfiguration(cfg => cfg.CreateMap<TSourse, TDestination>().ReverseMap());
             var mapper = config.CreateMapper();
             return mapper.Map<TDestination>(sourse);
-        }
+        }        
     }
 }

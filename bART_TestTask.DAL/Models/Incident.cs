@@ -14,6 +14,7 @@ namespace bART_TestTask.DAL.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Name { get; set; }
         public string Description { get; set; }
+        [Required]
         public virtual ICollection<Account> Accounts { get; set; }
     }
 }
