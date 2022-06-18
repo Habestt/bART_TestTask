@@ -9,7 +9,7 @@ namespace bART_TestTask.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        public readonly IAccountService _accountService;
+        private readonly IAccountService _accountService;
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;            
@@ -50,7 +50,7 @@ namespace bART_TestTask.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok(new { Message = "Incident was added successfully" });
+            return Ok(new { Message = "Account was added successfully" });
         }
     }
 }

@@ -12,7 +12,7 @@ namespace bART_TestTask.DAL.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        public readonly TestTaskContext _context;
+        private readonly TestTaskContext _context;
 
         public Repository(TestTaskContext context)
         {

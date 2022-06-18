@@ -14,8 +14,8 @@ namespace bART_TestTask.BLL.Services
 {
     public class AccountService : IAccountService
     {
-        public readonly IRepository<Account> _accountRepository;
-        public readonly IRepository<Contact> _contactRepository;
+        private readonly IRepository<Account> _accountRepository;
+        private readonly IRepository<Contact> _contactRepository;
 
         public AccountService(IRepository<Account> accountRepository, IRepository<Contact> contactRepository)
         {

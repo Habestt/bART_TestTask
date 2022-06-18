@@ -11,7 +11,7 @@ namespace bART_TestTask.DAL.Repositories
 {
     public class IncidentRepository : Repository<Incident>
     {
-        public readonly TestTaskContext _context;
+        private readonly TestTaskContext _context;
         public IncidentRepository(TestTaskContext context) : base(context)
         {
             _context = context;

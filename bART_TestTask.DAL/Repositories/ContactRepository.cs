@@ -10,7 +10,7 @@ namespace bART_TestTask.DAL.Repositories
 {
     public class ContactRepository : Repository<Contact>
     {
-        public readonly TestTaskContext _context;
+        private readonly TestTaskContext _context;
         public ContactRepository(TestTaskContext context) : base(context)
         {
             _context = context;

@@ -9,7 +9,7 @@ namespace bART_TestTask.API.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        public readonly IContactService _contactService;
+        private readonly IContactService _contactService;
         public ContactController(IContactService contactService)
         {
             _contactService = contactService;

@@ -11,7 +11,7 @@ namespace bART_TestTask.DAL.Repositories
 {
     public class AccountRepository : Repository<Account>
     {
-        public readonly TestTaskContext _context;
+        private readonly TestTaskContext _context;
         public AccountRepository(TestTaskContext context) : base(context)
         {
             _context = context;

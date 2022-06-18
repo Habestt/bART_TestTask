@@ -15,9 +15,9 @@ namespace bART_TestTask.BLL.Services
 {
     public class IncidentService : IIncidentService
     {
-        public readonly IRepository<Incident> _incidentRepository;
-        public readonly IRepository<Account> _accountRepository;
-        public readonly IRepository<Contact> _contactRepository;
+        private readonly IRepository<Incident> _incidentRepository;
+        private readonly IRepository<Account> _accountRepository;
+        private readonly IRepository<Contact> _contactRepository;
 
         public IncidentService(IRepository<Incident> incidentRepository, IRepository<Account> accountRepository, IRepository<Contact> contactRepository)
         {

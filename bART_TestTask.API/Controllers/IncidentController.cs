@@ -10,7 +10,7 @@ namespace bART_TestTask.API.Controllers
     [ApiController]
     public class IncidentController : ControllerBase
     {
-        public readonly IIncidentService _incidentService;
+        private readonly IIncidentService _incidentService;
         public IncidentController(IIncidentService incidentService)
         {
             _incidentService = incidentService;
