@@ -12,6 +12,8 @@
 #### Presentation ####
 * the project is based on multi-layered architecture: __Data Access__, __Business Logic__, __API__ layers
 * Autofac container and AutoMapper configuration were moved to Configuration Folder
+* Used depedency injection
+* Avaible email validation using regular expression
 * DataBase structure was build by code first 
 * Used repository pattern
 * Added many exeptions
