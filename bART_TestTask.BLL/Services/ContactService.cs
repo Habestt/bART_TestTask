@@ -71,6 +71,10 @@ namespace bART_TestTask.BLL.Services
             var contacts = await _contactRepository.GetAllAsync();
             var existContact = contacts.Where(x => x.Email == contactEmail).FirstOrDefault();
             var existAccount = await _accountRepository.GetByIdAsync(entity.AccountId);
+
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(contactEmail);
+
             if (existAccount == null)
             { 
                 throw new ArgumentException("Account not exist");
@@ -78,19 +82,19 @@ namespace bART_TestTask.BLL.Services
 
             if (existContact != null)
             {
-                existContact.AccountId = entity.AccountId;                
+                existContact.AccountId = entity.AccountId;
                 existContact.FirstName = entity.FirstName;
                 existContact.LastName = entity.LastName;
-                
+
 
                 await _contactRepository.UpdateAsync(existContact);
             }
-            else
+            else if (match.Success)
             {
                 Account account = await _accountRepository.GetByIdAsync(entity.AccountId);
                 Incident incident = AutoMapper<IncidentForAccDTO, Incident>.Map(entity.Incident);
                 await _incidentRepository.AddAsync(incident);
-                
+
                 account.IncidentName = incident.Name;
                 await _accountRepository.UpdateAsync(account);
 
@@ -102,9 +106,11 @@ namespace bART_TestTask.BLL.Services
                     LastName = entity.LastName,
                 };
 
-                
                 await _contactRepository.AddAsync(contact);
-                
+            }
+            else
+            {
+                throw new ArgumentException("Incorrect email");
             }
         }
 

@@ -54,9 +54,18 @@ namespace bART_TestTask.API.Controllers
         }
 
         [HttpPost("CreateOrUpdate/{contactEmail}")]
-        public async Task CreateOrUpdateForAcc([FromBody] ContactForAccDTO entity, string contactEmail)
-        {            
-            await _contactService.CreateOrUpdateByEmailAsync(entity, contactEmail);
+        public async Task<IActionResult> CreateOrUpdateForAcc([FromBody] ContactForAccDTO entity, string contactEmail)
+        {
+            try
+            {
+                await _contactService.CreateOrUpdateByEmailAsync(entity, contactEmail);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok(new { Message = "Everything went well" });
+            
         }
     }
 }

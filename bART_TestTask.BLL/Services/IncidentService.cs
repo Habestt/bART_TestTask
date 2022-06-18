@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace bART_TestTask.BLL.Services
@@ -27,24 +28,34 @@ namespace bART_TestTask.BLL.Services
 
         public async Task AddAsync(IncidentDTO entity)
         {
-            Incident incident = AutoMapper<IncidentDTO, Incident>.Map(entity);
-            Account account = AutoMapper<AccountDTO, Account>.Map(entity.Account);
-            Contact contact = AutoMapper<ContactDTO, Contact>.Map(entity.Account.Contact);
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(entity.Account.Contact.Email);
 
-            if (entity != null && entity.Account != null && entity.Account.Contact != null)
+            if (match.Success)
             {
-                await _incidentRepository.AddAsync(incident);
+                Incident incident = AutoMapper<IncidentDTO, Incident>.Map(entity);
+                Account account = AutoMapper<AccountDTO, Account>.Map(entity.Account);
+                Contact contact = AutoMapper<ContactDTO, Contact>.Map(entity.Account.Contact);
 
-                account.IncidentName = incident.Name;
-                await _accountRepository.AddAsync(account);
+                if (entity != null && entity.Account != null && entity.Account.Contact != null)
+                {
+                    await _incidentRepository.AddAsync(incident);
 
-                contact.AccountId = account.Id;
-                await _contactRepository.AddAsync(contact);
+                    account.IncidentName = incident.Name;
+                    await _accountRepository.AddAsync(account);
+
+                    contact.AccountId = account.Id;
+                    await _contactRepository.AddAsync(contact);
+                }
+                else
+                {
+                    throw new ArgumentException("account and contacts must be");
+                }
             }
             else
             {
-                throw new ArgumentException("account and contacts must be");
-            }
+                throw new ArgumentException("Incorrect email");
+            }            
         }
 
         public async Task AddForAccAsync(IncidentForAccDTO entity, string accountName)

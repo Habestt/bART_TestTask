@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace bART_TestTask.BLL.Services
@@ -24,20 +25,31 @@ namespace bART_TestTask.BLL.Services
 
         public async Task AddAsync(AccountDTO entity)
         {
-            Account account = AutoMapper<AccountDTO, Account>.Map(entity);
-            Contact contact = AutoMapper<ContactDTO, Contact>.Map(entity.Contact);
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(entity.Contact.Email);
 
-            if (entity != null && entity.Contact != null)
+            if (match.Success)
             {
-                await _accountRepository.AddAsync(account);
+                Account account = AutoMapper<AccountDTO, Account>.Map(entity);
+                Contact contact = AutoMapper<ContactDTO, Contact>.Map(entity.Contact);
 
-                contact.AccountId = account.Id;
-                await _contactRepository.AddAsync(contact);
+                if (entity != null && entity.Contact != null)
+                {
+                    await _accountRepository.AddAsync(account);
+
+                    contact.AccountId = account.Id;
+                    await _contactRepository.AddAsync(contact);
+                }
+                else if (entity.Contact == null)
+                {
+                    throw new ArgumentException("contacts must be");
+                }
             }
-            else if (entity.Contact == null)
+            else
             {
-                throw new ArgumentException("contacts must be");
-            }            
+                throw new ArgumentException("Incorrect email");
+            }
+            
         }
 
         public async Task<IEnumerable<Account>> GetAllAsync()

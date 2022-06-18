@@ -35,9 +35,9 @@ namespace bART_TestTask.API.Controllers
             {
                 await _incidentService.AddAsync(entity);
             }
-            catch
+            catch (ArgumentException ex)
             { 
-                return StatusCode(500);
+                return BadRequest(ex.Message);
             }
             return Ok(new { Message = "Incident was added successfully" });
 
